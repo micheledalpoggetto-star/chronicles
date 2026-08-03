@@ -215,73 +215,250 @@ const GameStart = {
     },
 
 
-    choose(choice){
+choose(choice){
 
-        const campaign =
-            JSON.parse(
-                localStorage.getItem(
-                    this.storageKey
-                )
-            );
+    const campaign =
+        JSON.parse(
+            localStorage.getItem(
+                this.storageKey
+            )
+        );
 
-        campaign.history.push({
+    campaign.history.push({
+        chapter: campaign.chapter,
+        scene: campaign.scene,
+        type: "player-choice",
+        text: choice,
+        createdAt: new Date().toISOString()
+    });
 
-            chapter:
-                campaign.chapter,
+    campaign.scene++;
 
-            scene:
-                campaign.scene,
+    const consequences = {
 
-            type:
-                "player-choice",
+        "Indaga su ciò che sta accadendo": {
 
             text:
-                choice,
+                "Ti avvicini alla fonte del pericolo. Tra il fumo distingui una figura ferita che stringe un oggetto avvolto in un panno.",
 
-            createdAt:
-                new Date().toISOString()
+            choices: [
+                "Soccorri la figura ferita",
+                "Esamina prima l'oggetto",
+                "Resta nascosto e osserva"
+            ]
+
+        },
+
+        "Preparati prima di agire": {
+
+            text:
+                "Raccogli ciò che può servirti e studi la situazione. Il tempo perso, però, permette al pericolo di avvicinarsi.",
+
+            choices: [
+                "Affronta il pericolo direttamente",
+                "Cerca qualcuno disposto ad aiutarti",
+                "Trova un percorso alternativo"
+            ]
+
+        },
+
+        "Allontanati dal pericolo": {
+
+            text:
+                "Ti allontani, ma presto scopri che la minaccia non è confinata al luogo da cui provieni. Qualcuno ti sta seguendo.",
+
+            choices: [
+                "Affronta chi ti segue",
+                "Tenta di seminarlo",
+                "Fingi di non averlo notato"
+            ]
+
+        }
+
+    };
+
+    const result =
+        consequences[choice];
+
+    if(!result){
+
+        this.showEnding(
+            campaign,
+            "La tua scelta cambia il corso degli eventi."
+        );
+
+        return;
+
+    }
+
+    campaign.history.push({
+        chapter: campaign.chapter,
+        scene: campaign.scene,
+        type: "narration",
+        text: result.text,
+        createdAt: new Date().toISOString()
+    });
+
+    localStorage.setItem(
+        this.storageKey,
+        JSON.stringify(campaign)
+    );
+
+    this.showScene(
+        campaign,
+        result.text,
+        result.choices
+    );
+
+},
+
+
+showScene(campaign, text, choices){
+
+    const buttonsHTML =
+        choices
+        .map((choice, index) => `
+
+            <button
+                class="scene-choice"
+                data-choice="${choice}"
+                style="
+                    display:block;
+                    width:100%;
+                    padding:16px;
+                    margin:10px 0;
+                    font-size:18px;
+                ">
+                ${choice}
+            </button>
+
+        `)
+        .join("");
+
+    document.body.innerHTML = `
+
+        <main style="
+            padding:24px;
+            max-width:700px;
+            margin:auto;
+        ">
+
+            <h1>Chronicles</h1>
+
+            <p style="
+                opacity:0.7;
+                text-transform:uppercase;
+                letter-spacing:2px;
+            ">
+                Capitolo ${campaign.chapter}
+                · Scena ${campaign.scene}
+            </p>
+
+            <h2>La conseguenza</h2>
+
+            <p style="
+                font-size:20px;
+                line-height:1.6;
+            ">
+                ${text}
+            </p>
+
+            <h3>Cosa fai?</h3>
+
+            ${buttonsHTML}
+
+        </main>
+
+    `;
+
+    document
+        .querySelectorAll(".scene-choice")
+        .forEach(button => {
+
+            button.onclick = () => {
+
+                this.continueStory(
+                    button.dataset.choice
+                );
+
+            };
 
         });
 
-        campaign.scene++;
+},
 
-        localStorage.setItem(
-            this.storageKey,
-            JSON.stringify(campaign)
+
+continueStory(choice){
+
+    const campaign =
+        JSON.parse(
+            localStorage.getItem(
+                this.storageKey
+            )
         );
 
-        document.body.innerHTML = `
+    campaign.history.push({
+        chapter: campaign.chapter,
+        scene: campaign.scene,
+        type: "player-choice",
+        text: choice,
+        createdAt: new Date().toISOString()
+    });
 
-            <main style="
-                padding:24px;
-                max-width:700px;
-                margin:auto;
+    campaign.scene++;
+
+    localStorage.setItem(
+        this.storageKey,
+        JSON.stringify(campaign)
+    );
+
+    this.showEnding(
+        campaign,
+        `Hai scelto: ${choice}. La tua decisione avrà conseguenze nella prossima scena.`
+    );
+
+},
+
+
+showEnding(campaign, text){
+
+    document.body.innerHTML = `
+
+        <main style="
+            padding:24px;
+            max-width:700px;
+            margin:auto;
+        ">
+
+            <h1>Chronicles</h1>
+
+            <p style="
+                opacity:0.7;
+                text-transform:uppercase;
+                letter-spacing:2px;
             ">
+                Capitolo ${campaign.chapter}
+                · Scena ${campaign.scene}
+            </p>
 
-                <h1>Chronicles</h1>
+            <h2>Il viaggio continua</h2>
 
-                <h2>Scelta registrata</h2>
+            <p style="
+                font-size:20px;
+                line-height:1.6;
+            ">
+                ${text}
+            </p>
 
-                <p>
-                    Hai scelto:
-                </p>
+            <p>
+                La campagna è stata salvata.
+            </p>
 
-                <p style="
-                    font-size:22px;
-                    font-weight:bold;
-                ">
-                    ${choice}
-                </p>
+        </main>
 
-                <p>
-                    La campagna è stata salvata.
-                </p>
+    `;
 
-            </main>
-
-        `;
-
-    }
+}
 
 };
 
