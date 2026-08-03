@@ -1130,7 +1130,6 @@ document.getElementById("start-adventure").onclick = () => {
 
     
 
-};
     setUniverse(id){
 
         this.data.universe = id;
