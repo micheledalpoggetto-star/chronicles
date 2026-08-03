@@ -1,0 +1,428 @@
+<!doctype html>
+<html lang="it">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover,user-scalable=no">
+<meta name="theme-color" content="#0b0d12">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="Chronicles">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="apple-touch-icon" href="icon-192.png">
+<title>Chronicles — AI Master</title>
+<style>
+:root{--bg:#0b0d12;--p:#151922;--p2:#202633;--l:#343d4d;--t:#eef2f8;--m:#9da7b9;--g:#d9af61;--b:#78a8dd;--c:#75c5cc;--gr:#69b98b;--r:#b95b5b}
+*{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+html,body{margin:0;background:var(--bg);color:var(--t);font:15px/1.48 -apple-system,BlinkMacSystemFont,system-ui,sans-serif;min-height:100%}
+body{padding:max(env(safe-area-inset-top),18px) 0 env(safe-area-inset-bottom)}
+button,input,textarea,select{font:inherit}
+button{touch-action:manipulation}
+.app{min-height:100vh;display:flex;flex-direction:column}
+header{position:sticky;top:0;min-height:62px;z-index:10;background:rgba(11,13,18,.95);backdrop-filter:blur(14px);border-bottom:1px solid var(--l);padding:10px 12px;display:flex;align-items:center;justify-content:space-between;gap:10px}
+.brand h1{margin:0;font:600 20px Georgia,serif}.brand p{margin:1px 0 0;color:var(--m);font-size:10px}
+.btn{border:1px solid var(--l);background:var(--p2);color:var(--t);border-radius:10px;padding:10px 12px;font-weight:600}.btn:active{transform:scale(.96)}
+#actBtn{transition:transform .08s ease,opacity .15s ease,filter .15s ease}
+#actBtn:active{transform:scale(.97);filter:brightness(1.18)}
+#actBtn[disabled]{opacity:.58;filter:saturate(.65);transform:none}
+#thinking{padding:6px 0;color:var(--g);font-weight:700}.gold{background:#664f22;border-color:#987a3e}.green{background:#244a39}.red{background:#542c31}.ghost{background:transparent}
+.tabs{display:grid;grid-template-columns:repeat(4,1fr);gap:6px;padding:8px 10px;background:#0f1218;border-bottom:1px solid var(--l);position:sticky;top:61px;z-index:9}.tab{font-size:11px;padding:8px 4px}.tab.active{border-color:var(--g);color:var(--g)}
+.view{display:none;flex:1}.view.active{display:block}
+.story{padding:12px 12px 190px}.msg{margin-bottom:16px}.who{font-size:10px;text-transform:uppercase;letter-spacing:.13em;color:var(--m);margin-bottom:4px}.master .bubble{border-left:3px solid var(--g);padding-left:11px}.player .bubble{border-left:3px solid var(--b);padding-left:11px}.npc .bubble{border-left:3px solid var(--c);padding-left:11px;color:#dcf3f5}.system .bubble{border-left:2px solid #596271;padding-left:10px;color:var(--m);font-style:italic;font-size:12px}
+.composer{position:fixed;left:0;right:0;bottom:calc(env(safe-area-inset-bottom) + 0px);z-index:15;background:rgba(11,13,18,.97);backdrop-filter:blur(15px);border-top:1px solid var(--l);padding:9px 10px 10px}
+textarea,input,select{width:100%;background:#0c1016;color:var(--t);border:1px solid var(--l);border-radius:10px;padding:11px}
+textarea{min-height:76px;resize:none}
+.actions{display:grid;grid-template-columns:1fr auto;gap:7px;margin-top:7px}.actions .btn{min-width:96px}
+.card{background:var(--p);border:1px solid var(--l);border-radius:12px;padding:12px;margin:10px}.section{padding:10px 0;border-bottom:1px solid var(--l)}.section:last-child{border:0}
+.label{font-size:10px;text-transform:uppercase;letter-spacing:.14em;color:var(--m);font-weight:800}.help{font-size:11px;color:var(--m)}
+.row{display:flex;align-items:center;gap:8px}.spread{justify-content:space-between}.wrap{flex-wrap:wrap}
+.stats{display:grid;grid-template-columns:repeat(3,1fr);gap:6px;margin-top:7px}.stat{text-align:center;background:var(--p2);border-radius:9px;padding:8px}.stat b{display:block;font:20px Georgia,serif}
+.badge{display:inline-block;border:1px solid var(--l);background:var(--p2);border-radius:99px;padding:4px 8px;font-size:10px;margin:2px}
+.meter{height:8px;background:#29303a;border-radius:99px;overflow:hidden}.meter i{display:block;height:100%;background:var(--gr)}
+.clean{list-style:none;padding:0;margin:5px 0}.clean li{padding:7px 0;border-bottom:1px dashed #303744}.clean li:last-child{border:0}
+.bridgebox{white-space:pre-wrap;background:#0c1016;border:1px solid var(--l);border-radius:10px;padding:10px;max-height:310px;overflow:auto;font:11px/1.45 ui-monospace,SFMono-Regular,Menlo,monospace}
+.bridgeBtns{display:grid;grid-template-columns:1fr 1fr;gap:7px;margin-top:8px}.bridgeBtns .wide{grid-column:1/-1}
+.dice{display:grid;grid-template-columns:repeat(4,1fr);gap:7px;margin-top:8px}.die{border:1px solid var(--l);background:var(--p2);color:var(--g);border-radius:9px;padding:12px 5px;font-weight:800}
+.roll{font:34px Georgia,serif;color:var(--g);text-align:center;padding:10px}
+.modal{position:fixed;inset:0;z-index:50;background:rgba(0,0,0,.9);padding:env(safe-area-inset-top) 12px env(safe-area-inset-bottom);display:flex;align-items:center;justify-content:center}.hidden{display:none}.modalbox{width:100%;max-height:92vh;overflow:auto;background:var(--p);border:1px solid var(--l);border-radius:15px;padding:16px}.grid2{display:grid;grid-template-columns:1fr 1fr;gap:9px}
+.notice{border:1px solid #66532f;background:#272117;color:#dcc58f;border-radius:9px;padding:10px;font-size:11px}
+.install{display:none}
+@keyframes dieSpin{0%{transform:rotate(0deg) scale(.9)}25%{transform:rotate(12deg) scale(1.05)}50%{transform:rotate(-12deg) scale(.96)}75%{transform:rotate(8deg) scale(1.04)}100%{transform:rotate(0deg) scale(1)}}
+#dieVisual.rolling{animation:dieSpin .18s linear infinite}
+#rollOutcome.success{color:var(--gr)}
+#rollOutcome.fail{color:var(--r)}
+#rollOutcome.crit{color:var(--g);text-shadow:0 0 18px rgba(217,175,97,.35)}
+@media(display-mode:browser){.install{display:inline-block}}
+</style>
+</head>
+<body>
+<div class="app">
+<header>
+ <div class="brand"><h1>Chronicles</h1><p>AI Master automatico • l’app tiene il gioco <span style="opacity:.45;font-size:10px">v4</span></p></div>
+ <div class="row"><button class="btn ghost install" onclick="installHelp()">Installa</button><button class="btn ghost" onclick="save()">Salva</button></div>
+</header>
+<div class="tabs" style="grid-template-columns:repeat(3,1fr)">
+ <button class="btn tab active" data-tab="story" onclick="showTab('story')">Storia</button>
+ <button class="btn tab" data-tab="sheet" onclick="showTab('sheet')">Scheda</button>
+ <button class="btn tab" data-tab="dice" onclick="showTab('dice')">Dadi</button>
+</div>
+
+<section id="storyView" class="view active">
+ <div id="scene" class="story"></div>
+ <div class="composer">
+  <textarea id="action" placeholder='Scrivi ciò che fai o dici. Es.: «Mi avvicino al tavolo e chiedo chi è.»'></textarea>
+  <div class="actions" style="grid-template-columns:1fr">
+    <button id="actBtn" class="btn gold" onclick="prepareTurn()">Agisci</button>
+  </div>
+  <div id="thinking" class="help" style="text-align:center;margin-top:6px;display:none">Il Master sta pensando…</div>
+  <div id="gameStatus" class="help" style="text-align:center;margin-top:7px;min-height:20px;color:#d9af61;font-weight:700"></div>
+ </div>
+</section>
+
+<section id="sheetView" class="view">
+ <div class="card">
+  <div class="section"><div class="label">Personaggio</div><h2 id="nm" style="margin:3px 0"></h2><div id="meta" class="help"></div></div>
+  <div class="section"><div class="row spread"><span>HP</span><b id="hp"></b></div><div class="meter"><i id="hpbar"></i></div></div>
+  <div class="section"><div class="stats" id="stats"></div></div>
+  <div class="section"><div class="label">Inventario</div><ul id="inv" class="clean"></ul></div>
+  <div class="section"><div class="label">Quest</div><ul id="quests" class="clean"></ul></div>
+  <div class="section"><div class="label">PNG conosciuti</div><ul id="npcs" class="clean"></ul></div>
+  <div class="row wrap"><button class="btn" onclick="exportSave()">Esporta backup</button><button class="btn red" onclick="newGame()">Nuova campagna</button></div>
+ </div>
+</section>
+
+<section id="masterView" class="view">
+ <div class="card">
+  <div class="label">Diagnostica AI</div>
+  <div id="aiStatus" class="notice">Connessione da verificare…</div>
+  <div class="section"><div class="label">Backend</div><div class="help">https://chronicles-master.micheledalpoggetto.workers.dev/</div></div>
+  <button class="btn" style="width:100%" onclick="testAI()">Testa AI</button>
+ </div>
+</section>
+
+<section id="diceView" class="view">
+ <div class="card">
+  <div class="label">Dadi manuali</div>
+  <div class="help">Durante la campagna i tiri richiesti dal Master vengono eseguiti automaticamente. Qui puoi tirare liberamente quando vuoi.</div>
+  <div class="dice">
+   <button class="die" onclick="r(4)">d4</button>
+   <button class="die" onclick="r(6)">d6</button>
+   <button class="die" onclick="r(8)">d8</button>
+   <button class="die" onclick="r(10)">d10</button>
+   <button class="die" onclick="r(12)">d12</button>
+   <button class="die" onclick="r(20)">d20</button>
+   <button class="die" onclick="r(100)">d100</button>
+  </div>
+  <div id="roll" class="roll">—</div>
+ </div>
+</section>
+
+
+<div id="rollOverlay" class="modal hidden" style="z-index:80;background:rgba(3,4,7,.96)">
+ <div style="width:min(420px,94vw);text-align:center">
+  <div id="rollSkill" class="label" style="font-size:13px;color:var(--g);margin-bottom:12px">Prova</div>
+  <div id="dieVisual" style="width:150px;height:150px;margin:0 auto 16px;border:2px solid var(--g);border-radius:28px;display:grid;place-items:center;font:700 62px Georgia,serif;background:radial-gradient(circle at 35% 25%,#2d3340,#12161e 70%);box-shadow:0 0 45px rgba(217,175,97,.18);transition:.16s transform">d20</div>
+  <div id="rollFormula" style="font:22px Georgia,serif;margin-bottom:6px"></div>
+  <div id="rollOutcome" style="font-weight:800;font-size:18px;min-height:28px"></div>
+  <div id="rollReason" class="help" style="margin-top:9px"></div>
+ </div>
+</div>
+
+<div id="setup" class="modal hidden"><div class="modalbox">
+ <h2>Nuova campagna</h2>
+ <div class="grid2"><div><label class="label">Nome</label><input id="sname"></div><div><label class="label">Classe</label><select id="sclass"><option>Guerriero</option><option>Ladro</option><option>Mago</option><option>Chierico</option><option>Ranger</option><option>Bardo</option><option>Barbaro</option><option>Paladino</option></select></div></div>
+ <div class="grid2" style="margin-top:9px"><div><label class="label">Razza</label><select id="srace"><option>Umano</option><option>Elfo</option><option>Nano</option><option>Halfling</option><option>Mezzorco</option><option>Tiefling</option></select></div><div><label class="label">Background</label><select id="sbg"><option>Nobile</option><option>Soldato</option><option>Criminale</option><option>Studioso</option><option>Forestiero</option><option>Artigiano</option></select></div></div>
+ <div style="margin-top:9px"><label class="label">Ambientazione / tono</label><textarea id="sworld" placeholder="Fantasy classico, mistero, tono serio ma avventuroso..."></textarea></div>
+ <div style="margin-top:9px"><label class="label">Aspetto / personalità</label><textarea id="slook"></textarea></div>
+ <button class="btn gold" style="width:100%;margin-top:12px" onclick="start()">Crea campagna</button>
+</div></div>
+
+<div id="installModal" class="modal hidden"><div class="modalbox">
+ <h2>Installa su iPhone</h2>
+ <p>Apri questa pagina in <b>Safari</b>, tocca il pulsante <b>Condividi</b> e scegli <b>Aggiungi alla schermata Home</b>.</p>
+ <p class="help">La PWA deve essere pubblicata su un indirizzo HTTPS; non può essere installata direttamente da un file locale.</p>
+ <button class="btn" style="width:100%" onclick="installModal.classList.add('hidden')">Chiudi</button>
+</div></div>
+</div>
+<script>
+const $=id=>document.getElementById(id);
+const storyView=$('storyView'), scene=$('scene'), action=$('action'), actBtn=$('actBtn'), thinking=$('thinking'), gameStatus=$('gameStatus');
+const sheetView=$('sheetView'), nm=$('nm'), meta=$('meta'), hp=$('hp'), hpbar=$('hpbar'), stats=$('stats'), inv=$('inv'), quests=$('quests'), npcs=$('npcs');
+const masterView=$('masterView'), aiStatus=$('aiStatus'), diceView=$('diceView'), roll=$('roll');
+const rollOverlay=$('rollOverlay'), rollSkill=$('rollSkill'), dieVisual=$('dieVisual'), rollFormula=$('rollFormula'), rollOutcome=$('rollOutcome'), rollReason=$('rollReason');
+const setup=$('setup'), sname=$('sname'), sclass=$('sclass'), srace=$('srace'), sbg=$('sbg'), sworld=$('sworld'), slook=$('slook'), installModal=$('installModal');
+let state=null,lastAction='',pendingRoll=null;const WORKER_URL="https://chronicles-master.micheledalpoggetto.workers.dev/";
+const cls={
+ Guerriero:{hp:12,ac:16,stats:{FOR:17,DES:12,COS:14,INT:11,SAG:11,CAR:11},items:['Spada lunga','Scudo','Armatura','Razioni ×5']},
+ Ladro:{hp:10,ac:14,stats:{FOR:11,DES:17,COS:14,INT:12,SAG:11,CAR:11},items:['Stocco','Pugnale ×2','Attrezzi da scasso']},
+ Mago:{hp:8,ac:12,stats:{FOR:9,DES:13,COS:14,INT:17,SAG:12,CAR:11},items:['Bastone','Libro degli incantesimi','Focus arcano']},
+ Chierico:{hp:10,ac:17,stats:{FOR:13,DES:10,COS:14,INT:11,SAG:17,CAR:12},items:['Mazza','Scudo','Simbolo sacro']},
+ Ranger:{hp:12,ac:15,stats:{FOR:12,DES:17,COS:14,INT:11,SAG:14,CAR:10},items:['Arco lungo','Frecce ×20','Spada corta']},
+ Bardo:{hp:10,ac:14,stats:{FOR:10,DES:14,COS:14,INT:11,SAG:12,CAR:17},items:['Stocco','Liuto','Pugnale']},
+ Barbaro:{hp:14,ac:14,stats:{FOR:17,DES:13,COS:16,INT:9,SAG:11,CAR:10},items:['Ascia bipenne','Giavellotti ×2']},
+ Paladino:{hp:12,ac:18,stats:{FOR:16,DES:10,COS:14,INT:10,SAG:12,CAR:16},items:['Spada lunga','Scudo','Simbolo sacro']}
+};
+function esc(s){return String(s??'').replace(/[&<>"']/g,m=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[m]))}
+function showTab(n){
+ document.querySelectorAll('.view').forEach(v=>v.classList.remove('active'));
+ const target=$(n+'View'); if(target)target.classList.add('active');
+ document.querySelectorAll('.tab').forEach(b=>b.classList.toggle('active',b.dataset.tab===n));
+ window.scrollTo(0,0)
+}
+function installHelp(){installModal.classList.remove('hidden')}
+function newGame(){setup.classList.remove('hidden')}
+function start(){
+ let n=sname.value.trim();if(!n)return;let c=cls[sclass.value];
+ state={version:2,title:'Le Cronache di '+n,character:{name:n,class:sclass.value,race:srace.value,background:sbg.value,look:slook.value,hp:c.hp,maxhp:c.hp,ac:c.ac,level:1,xp:0,stats:c.stats},world:{description:sworld.value||'Fantasy classico, mistero e avventura.',location:'Da stabilire',day:1,time:'mattina'},inventory:[...c.items],quests:[],npcs:[],facts:[],masterSecrets:[],messages:[],notes:[],lastRoll:null};
+ setup.classList.add('hidden');save();render();prepareOpening();showTab('story')
+}
+function render(){
+ if(!state)return;
+ nm.textContent=state.character.name;meta.textContent=`${state.character.race} • ${state.character.class} • ${state.character.background} • CA ${state.character.ac}`;
+ hp.textContent=`${state.character.hp}/${state.character.maxhp}`;hpbar.style.width=(state.character.hp/state.character.maxhp*100)+'%';
+ stats.innerHTML=Object.entries(state.character.stats).map(([k,v])=>`<div class="stat"><span class="label">${k}</span><b>${v}</b></div>`).join('');
+ inv.innerHTML=state.inventory.map(x=>`<li>${esc(x)}</li>`).join('');
+ quests.innerHTML=state.quests.map(x=>`<li><b>${esc(x.name)}</b><div class="help">${esc(x.status)}</div></li>`).join('')||'<li class="help">Nessuna</li>';
+ npcs.innerHTML=state.npcs.map(x=>`<li><b>${esc(x.name)}</b><div class="help">${esc(x.description||'')}${x.attitude?' • '+esc(x.attitude):''}</div></li>`).join('')||'<li class="help">Nessuno</li>';
+ scene.innerHTML=state.messages.map(m=>`<div class="msg ${m.type}"><div class="who">${esc(m.speaker||m.type)}</div><div class="bubble">${esc(m.text).replace(/\n/g,'<br>')}</div></div>`).join('');
+ const _thinking=document.getElementById('thinking'),_actBtn=document.getElementById('actBtn');
+ if(_thinking&&_actBtn){if(window.aiBusy){_thinking.style.display='block';_actBtn.disabled=true}else{_thinking.style.display='none';_actBtn.disabled=false}}
+ setTimeout(()=>window.scrollTo(0,document.body.scrollHeight),30)
+}
+function r(s){
+ let v=crypto.getRandomValues(new Uint32Array(1))[0]%s+1;
+ roll.textContent=v;
+ state.lastRoll={die:'d'+s,value:v,manual:true};
+ save();
+ return v
+}
+async function prepareOpening(){
+ lastAction='INIZIO CAMPAGNA';
+ await callMaster('OPENING','INIZIO CAMPAGNA',null);
+}
+function quickPrepare(){prepareTurn()}
+async function prepareTurn(){
+ if(window.aiBusy)return;
+ const t=(action?.value||'').trim();
+ if(!t){
+  if(gameStatus)gameStatus.textContent='Scrivi prima cosa vuoi fare o dire.';
+  return;
+ }
+ if(!state){
+  if(gameStatus)gameStatus.textContent='Prima crea o carica una campagna.';
+  newGame();
+  return;
+ }
+ if(gameStatus)gameStatus.textContent='';
+ actBtn.disabled=true;
+ thinking.style.display='block';
+ lastAction=t;
+ state.messages.push({type:'player',speaker:state.character.name,text:t});
+ action.value='';
+ save();render();
+ await callMaster('TURN',t,null);
+}
+function compactState(){
+ return {
+  character:state.character,
+  world:state.world,
+  inventory:state.inventory,
+  quests:state.quests,
+  npcs:state.npcs,
+  facts:state.facts,
+  master_secrets:state.masterSecrets||[],
+  notes:state.notes.slice(-20),
+  lastRoll:state.lastRoll,
+  recent_messages:state.messages.slice(-24)
+ }
+}
+function buildOutgoing(opening){}
+
+async function testAI(){
+ try{
+  const r=await fetch(WORKER_URL+'?ai=1');
+  const d=await r.json();
+  aiStatus.textContent=d.ok?'AI collegata e operativa ✅':'Errore AI: '+(d.error||'sconosciuto');
+ }catch(e){aiStatus.textContent='Errore di connessione: '+e.message}
+}
+
+async function callMaster(mode,playerAction,rollResult){
+ window.aiBusy=true;
+ if(thinking)thinking.style.display='block';
+ if(actBtn)actBtn.disabled=true;
+ if(gameStatus)gameStatus.textContent='1/5 • Invio al Master…';
+ render();
+
+ const controller=new AbortController();
+ const timeout=setTimeout(()=>controller.abort(),20000);
+
+ try{
+  const payload={
+   mode,
+   player_action:playerAction,
+   roll_result:rollResult||null,
+   state:compactState()
+  };
+
+  if(gameStatus)gameStatus.textContent='2/5 • Richiesta inviata…';
+
+  const res=await fetch(WORKER_URL,{
+   method:'POST',
+   headers:{'Content-Type':'application/json'},
+   body:JSON.stringify(payload),
+   signal:controller.signal,
+   cache:'no-store'
+  });
+
+  if(gameStatus)gameStatus.textContent=`3/5 • HTTP ${res.status} ricevuto…`;
+
+  const raw=await res.text();
+
+  if(gameStatus)gameStatus.textContent=`4/5 • Risposta ricevuta (${raw.length} caratteri)…`;
+
+  let envelope;
+  try{
+   envelope=JSON.parse(raw);
+  }catch(parseErr){
+   throw new Error('JSON risposta non valido: '+parseErr.message+' | Inizio risposta: '+raw.slice(0,180));
+  }
+
+  if(!res.ok||!envelope.ok){
+   throw new Error(envelope?.error||('HTTP '+res.status));
+  }
+
+  if(!envelope.data){
+   throw new Error('Risposta valida ma manca il campo data.');
+  }
+
+  if(gameStatus)gameStatus.textContent='5/5 • Applico la risposta del Master…';
+
+  await applyMasterData(envelope.data);
+
+  if(gameStatus)gameStatus.textContent='';
+
+ }catch(e){
+  let detail;
+  if(e && e.name==='AbortError') detail='Timeout: il Master non ha risposto entro 20 secondi.';
+  else detail=(e&&e.message)?e.message:String(e);
+
+  const msg='Errore Master: '+detail;
+  if(state){
+   state.messages.push({type:'system',speaker:'Sistema',text:msg});
+   save();
+  }
+  if(gameStatus)gameStatus.textContent=msg;
+ }finally{
+  clearTimeout(timeout);
+  window.aiBusy=false;
+  if(thinking)thinking.style.display='none';
+  if(actBtn)actBtn.disabled=false;
+  render();
+ }
+}
+
+async function applyMasterData(d){
+ (d.messages||[]).forEach(m=>state.messages.push({type:m.type||'master',speaker:m.speaker||'Narratore',text:m.text||''}));
+ if(d.location)state.world.location=d.location;
+ if(d.time)state.world.time=d.time;
+ state.character.hp=Math.max(0,Math.min(state.character.maxhp,state.character.hp+(+d.hp_delta||0)));
+ state.character.xp+=(+d.xp_delta||0);
+
+ (d.inventory_add||[]).forEach(x=>{if(!state.inventory.includes(x))state.inventory.push(x)});
+ (d.inventory_remove||[]).forEach(x=>{let i=state.inventory.indexOf(x);if(i>=0)state.inventory.splice(i,1)});
+ (d.quest_add||[]).forEach(q=>{if(!state.quests.some(x=>x.name===q.name))state.quests.push(q)});
+ (d.quest_update||[]).forEach(q=>{let x=state.quests.find(z=>z.name===q.name);if(x)x.status=q.status});
+ (d.npc_updates||[]).forEach(n=>{let x=state.npcs.find(z=>z.name===n.name);if(x)Object.assign(x,n);else state.npcs.push(n)});
+ (d.facts_add||[]).forEach(x=>{if(!state.facts.includes(x))state.facts.push(x)});
+ state.masterSecrets=state.masterSecrets||[];
+ (d.master_secrets_add||[]).forEach(x=>{if(!state.masterSecrets.includes(x))state.masterSecrets.push(x)});
+ (d.notes_add||[]).forEach(x=>state.notes.push(x));
+
+ save();render();
+
+ if(d.roll_request){
+   pendingRoll=d.roll_request;
+   await automaticCampaignRoll(pendingRoll);
+ }else{
+   pendingRoll=null;
+   showTab('story');
+ }
+}
+
+function statMod(ability){
+ const v=state.character.stats?.[ability]??10;
+ return Math.floor((v-10)/2);
+}
+
+function secureRoll(sides){
+ return crypto.getRandomValues(new Uint32Array(1))[0]%sides+1;
+}
+
+async function automaticCampaignRoll(req){
+ const die=String(req.die||'d20').toLowerCase();
+ const sides=parseInt(die.replace('d',''))||20;
+ const ability=req.ability||null;
+ const modifier=ability?statMod(ability):0;
+
+ document.getElementById('rollSkill').textContent=req.skill||ability||'Prova';
+ document.getElementById('rollReason').textContent=req.reason||'';
+ document.getElementById('rollFormula').textContent='';
+ document.getElementById('rollOutcome').textContent='';
+ document.getElementById('rollOutcome').className='';
+ document.getElementById('dieVisual').textContent=die;
+ document.getElementById('rollOverlay').classList.remove('hidden');
+ document.getElementById('dieVisual').classList.add('rolling');
+
+ // purely visual random values while spinning
+ let visual=setInterval(()=>{document.getElementById('dieVisual').textContent=secureRoll(sides)},70);
+ await new Promise(r=>setTimeout(r,900));
+
+ clearInterval(visual);
+ const raw=secureRoll(sides);
+ const total=raw+modifier;
+ document.getElementById('dieVisual').classList.remove('rolling');
+ document.getElementById('dieVisual').textContent=raw;
+
+ const modTxt=modifier===0?'':(modifier>0?` + ${modifier}`:` - ${Math.abs(modifier)}`);
+ document.getElementById('rollFormula').textContent=`${raw}${modTxt} = ${total}  •  CD ${req.dc}`;
+
+ let label='';
+ if(sides===20 && raw===20){label='20 NATURALE';document.getElementById('rollOutcome').className='crit'}
+ else if(sides===20 && raw===1){label='1 NATURALE';document.getElementById('rollOutcome').className='fail'}
+ else if(total>=req.dc){label='SUCCESSO';document.getElementById('rollOutcome').className='success'}
+ else {label='FALLIMENTO';document.getElementById('rollOutcome').className='fail'}
+ document.getElementById('rollOutcome').textContent=label;
+
+ const rr={die,raw,modifier,total,dc:req.dc,ability:req.ability||null,skill:req.skill||null,reason:req.reason||''};
+ state.lastRoll=rr;
+ state.messages.push({type:'system',speaker:'Sistema',text:`${req.skill||req.ability||'Prova'}: ${raw}${modTxt} = ${total} contro CD ${req.dc}.`});
+ save();
+
+ await new Promise(r=>setTimeout(r,1250));
+ document.getElementById('rollOverlay').classList.add('hidden');
+
+ // Automatically tell the Master; no player interaction needed
+ await callMaster('ROLL_RESULT','RISULTATO DEL TIRO',rr);
+}
+
+async function shareOutgoing(){}
+function prepareRollReply(){}
+function save(){if(state)localStorage.setItem('chronicles_pwa_master',JSON.stringify(state))}
+function exportSave(){if(!state)return;let a=document.createElement('a'),b=new Blob([JSON.stringify(state,null,2)],{type:'application/json'});a.href=URL.createObjectURL(b);a.download=(state.character.name||'campagna')+'_chronicles.json';a.click()}
+if('serviceWorker' in navigator)window.addEventListener('load',()=>navigator.serviceWorker.register('./sw.js').catch(()=>{}));
+window.addEventListener('error',e=>{
+ if(gameStatus)gameStatus.textContent='Errore app: '+(e.message||'errore sconosciuto');
+});
+window.addEventListener('unhandledrejection',e=>{
+ if(gameStatus)gameStatus.textContent='Errore app: '+((e.reason&&e.reason.message)||e.reason||'errore sconosciuto');
+});
+
+(function(){
+ let s=localStorage.getItem('chronicles_pwa_master');
+ if(s){
+  try{state=JSON.parse(s);state.masterSecrets=state.masterSecrets||[];render()}
+  catch{newGame()}
+ }else newGame()
+})();
+</script>
+</body>
+</html>
