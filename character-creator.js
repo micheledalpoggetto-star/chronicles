@@ -1105,13 +1105,32 @@ const CharacterCreator = {
                     ">
                         Il personaggio è stato salvato.
                     </p>
-
+<button
+    id="start-adventure"
+    style="
+        width:100%;
+        padding:16px;
+        margin-top:20px;
+        font-size:18px;
+    ">
+    Inizia avventura
+</button>
                 `
             );
+document.getElementById("start-adventure").onclick = () => {
 
+    this.save();
+
+    GameStart.start();
+
+    };
+            
     },
 
 
+    
+
+};
     setUniverse(id){
 
         this.data.universe = id;
