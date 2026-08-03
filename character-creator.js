@@ -10,9 +10,6 @@ const CharacterCreator = {
 
     step: 0,
 
-    statPoints: 0,
-    statFloor: {},
-
     data: {
         universe: null,
         race: null,
@@ -20,9 +17,9 @@ const CharacterCreator = {
         background: null,
         alignment: null,
         stats: {},
+        name: null,
         portrait: null
     },
-
 
     universes: {
 
@@ -94,132 +91,11 @@ const CharacterCreator = {
                 "Intelligenza",
                 "Saggezza",
                 "Carisma"
-            ],
-
-            raceBonuses: {
-                "Umano": {
-                    "Forza": 1,
-                    "Destrezza": 1,
-                    "Costituzione": 1
-                },
-
-                "Elfo Alto": {
-                    "Destrezza": 2,
-                    "Intelligenza": 1
-                },
-
-                "Elfo dei Boschi": {
-                    "Destrezza": 2,
-                    "Saggezza": 1
-                },
-
-                "Nano": {
-                    "Costituzione": 2,
-                    "Forza": 1
-                },
-
-                "Halfling": {
-                    "Destrezza": 2,
-                    "Carisma": 1
-                },
-
-                "Gnomo": {
-                    "Intelligenza": 2,
-                    "Destrezza": 1
-                },
-
-                "Dragonide": {
-                    "Forza": 2,
-                    "Carisma": 1
-                },
-
-                "Tiefling": {
-                    "Carisma": 2,
-                    "Intelligenza": 1
-                },
-
-                "Mezzelfo": {
-                    "Carisma": 2,
-                    "Destrezza": 1
-                },
-
-                "Mezzorco": {
-                    "Forza": 2,
-                    "Costituzione": 1
-                }
-            },
-
-            vocationBonuses: {
-
-                "Guerriero": {
-                    "Forza": 2,
-                    "Costituzione": 1
-                },
-
-                "Paladino": {
-                    "Forza": 1,
-                    "Costituzione": 1,
-                    "Carisma": 1
-                },
-
-                "Barbaro": {
-                    "Forza": 2,
-                    "Costituzione": 1
-                },
-
-                "Ladro": {
-                    "Destrezza": 2,
-                    "Intelligenza": 1
-                },
-
-                "Ranger": {
-                    "Destrezza": 1,
-                    "Saggezza": 2
-                },
-
-                "Monaco": {
-                    "Destrezza": 1,
-                    "Saggezza": 2
-                },
-
-                "Mago": {
-                    "Intelligenza": 3
-                },
-
-                "Stregone": {
-                    "Carisma": 2,
-                    "Costituzione": 1
-                },
-
-                "Warlock": {
-                    "Carisma": 2,
-                    "Saggezza": 1
-                },
-
-                "Bardo": {
-                    "Carisma": 2,
-                    "Destrezza": 1
-                },
-
-                "Druido": {
-                    "Saggezza": 2,
-                    "Costituzione": 1
-                },
-
-                "Chierico": {
-                    "Saggezza": 2,
-                    "Carisma": 1
-                }
-
-            }
-
+            ]
         },
+                lovecraft: {
 
-
-        lovecraft: {
-
-            orientationLabel:
-                "Scegli il tuo atteggiamento verso l'ignoto",
+            orientationLabel: "Scegli il tuo atteggiamento verso l'ignoto",
 
             races: [
                 "Umano"
@@ -268,72 +144,13 @@ const CharacterCreator = {
                 "Istruzione",
                 "Volontà",
                 "Presenza"
-            ],
-
-            raceBonuses: {
-                "Umano": {
-                    "Fisico": 1,
-                    "Intelletto": 1,
-                    "Volontà": 1
-                }
-            },
-
-            vocationBonuses: {
-
-                "Detective": {
-                    "Intelletto": 2,
-                    "Presenza": 1
-                },
-
-                "Medico": {
-                    "Istruzione": 2,
-                    "Intelletto": 1
-                },
-
-                "Storico": {
-                    "Istruzione": 2,
-                    "Intelletto": 1
-                },
-
-                "Professore": {
-                    "Istruzione": 3
-                },
-
-                "Giornalista": {
-                    "Presenza": 2,
-                    "Intelletto": 1
-                },
-
-                "Investigatore Privato": {
-                    "Intelletto": 1,
-                    "Destrezza": 1,
-                    "Presenza": 1
-                },
-
-                "Sacerdote": {
-                    "Volontà": 2,
-                    "Presenza": 1
-                },
-
-                "Antiquario": {
-                    "Istruzione": 2,
-                    "Volontà": 1
-                },
-
-                "Criminale": {
-                    "Destrezza": 2,
-                    "Presenza": 1
-                }
-
-            }
-
+            ]
         },
 
 
         superheroes: {
 
-            orientationLabel:
-                "Scegli da che parte stare",
+            orientationLabel: "Scegli da che parte stare",
 
             races: [
                 "Umano",
@@ -378,73 +195,11 @@ const CharacterCreator = {
                 "Intelletto",
                 "Volontà",
                 "Presenza"
-            ],
-
-            raceBonuses: {
-
-                "Umano": {
-                    "Volontà": 1,
-                    "Intelletto": 1,
-                    "Presenza": 1
-                },
-
-                "Mutante": {
-                    "Potenza": 2,
-                    "Volontà": 1
-                },
-
-                "Alieno": {
-                    "Potenza": 1,
-                    "Resistenza": 2
-                },
-
-                "Androide": {
-                    "Resistenza": 2,
-                    "Intelletto": 1
-                }
-
-            },
-
-            vocationBonuses: {
-
-                "Speedster": {
-                    "Agilità": 3
-                },
-
-                "Telepate": {
-                    "Volontà": 2,
-                    "Intelletto": 1
-                },
-
-                "Tecnologico": {
-                    "Intelletto": 3
-                },
-
-                "Mistico": {
-                    "Volontà": 2,
-                    "Presenza": 1
-                },
-
-                "Combattente": {
-                    "Potenza": 2,
-                    "Resistenza": 1
-                },
-
-                "Mutaforma": {
-                    "Resistenza": 1,
-                    "Agilità": 1,
-                    "Presenza": 1
-                }
-
-            }
-
+            ]
         },
+                cyberpunk: {
 
-
-        cyberpunk: {
-
-            orientationLabel:
-                "Scegli la tua posizione nel sistema",
+            orientationLabel: "Scegli la tua posizione nel sistema",
 
             races: [
                 "Umano",
@@ -492,70 +247,13 @@ const CharacterCreator = {
                 "Intelligenza",
                 "Freddezza",
                 "Empatia"
-            ],
-
-            raceBonuses: {
-
-                "Umano": {
-                    "Empatia": 1,
-                    "Freddezza": 1,
-                    "Intelligenza": 1
-                },
-
-                "Cyborg": {
-                    "Corpo": 2,
-                    "Riflessi": 1
-                },
-
-                "Clone": {
-                    "Riflessi": 1,
-                    "Intelligenza": 1,
-                    "Tecnica": 1
-                },
-
-                "Sintetico": {
-                    "Tecnica": 2,
-                    "Intelligenza": 1
-                }
-
-            },
-
-            vocationBonuses: {
-
-                "Netrunner": {
-                    "Intelligenza": 2,
-                    "Tecnica": 1
-                },
-
-                "Mercenario": {
-                    "Corpo": 2,
-                    "Riflessi": 1
-                },
-
-                "Tecnomedico": {
-                    "Tecnica": 2,
-                    "Intelligenza": 1
-                },
-
-                "Infiltratore": {
-                    "Riflessi": 2,
-                    "Freddezza": 1
-                },
-
-                "Cacciatore": {
-                    "Riflessi": 1,
-                    "Freddezza": 2
-                }
-
-            }
-
+            ]
         },
 
 
         "fractured-domains": {
 
-            orientationLabel:
-                "Scegli il tuo rapporto con i Domini",
+            orientationLabel: "Scegli il tuo rapporto con i Domini",
 
             races: [
                 "Umano",
@@ -601,62 +299,7 @@ const CharacterCreator = {
                 "Volontà",
                 "Presenza",
                 "Affinità"
-            ],
-
-            raceBonuses: {
-
-                "Umano": {
-                    "Vigore": 1,
-                    "Mente": 1,
-                    "Presenza": 1
-                },
-
-                "Custode": {
-                    "Volontà": 2,
-                    "Affinità": 1
-                },
-
-                "Forgiato": {
-                    "Vigore": 2,
-                    "Volontà": 1
-                },
-
-                "Nomade": {
-                    "Agilità": 2,
-                    "Mente": 1
-                }
-
-            },
-
-            vocationBonuses: {
-
-                "Custode": {
-                    "Volontà": 2,
-                    "Affinità": 1
-                },
-
-                "Mistico": {
-                    "Affinità": 2,
-                    "Volontà": 1
-                },
-
-                "Campione": {
-                    "Vigore": 2,
-                    "Presenza": 1
-                },
-
-                "Esploratore": {
-                    "Agilità": 2,
-                    "Mente": 1
-                },
-
-                "Arcanista": {
-                    "Mente": 2,
-                    "Affinità": 1
-                }
-
-            }
-
+            ]
         }
 
     },
@@ -673,20 +316,15 @@ const CharacterCreator = {
             background: null,
             alignment: null,
             stats: {},
+            name: null,
             portrait: null
         };
-
-        this.statPoints = 0;
-        this.statFloor = {};
 
         this.setUniverse(universe);
 
         this.showRaceSelection();
-
     },
-
-
-    pageTemplate(title, extraContent){
+        pageTemplate(title, extraContent){
 
         return `
             <main style="
@@ -694,26 +332,19 @@ const CharacterCreator = {
                 max-width:700px;
                 margin:auto;
             ">
-
                 <h1>Chronicles</h1>
-
                 <h2>${title}</h2>
-
                 ${extraContent}
-
             </main>
         `;
-
     },
 
 
     createChoiceButton(text, callback){
 
-        const button =
-            document.createElement("button");
+        const button = document.createElement("button");
 
         button.textContent = text;
-
         button.style.display = "block";
         button.style.width = "100%";
         button.style.padding = "16px";
@@ -724,178 +355,133 @@ const CharacterCreator = {
         button.onclick = callback;
 
         return button;
-
     },
 
 
     showRaceSelection(){
 
-        document.body.innerHTML =
-            this.pageTemplate(
-                "Crea il tuo personaggio",
-                `
-                    <p>
-                        Universo:
-                        <strong>
-                            ${this.data.universe}
-                        </strong>
-                    </p>
+        document.body.innerHTML = this.pageTemplate(
+            "Crea il tuo personaggio",
+            `
+                <p>
+                    Universo:
+                    <strong>${this.data.universe}</strong>
+                </p>
 
-                    <h3>Scegli la razza</h3>
+                <h3>Scegli la razza</h3>
 
-                    <div id="character-races"></div>
-                `
-            );
+                <div id="character-races"></div>
+            `
+        );
 
         const container =
-            document.getElementById(
-                "character-races"
-            );
+            document.getElementById("character-races");
 
         this.getRaces().forEach(race => {
 
             container.appendChild(
-
                 this.createChoiceButton(
                     race,
                     () => {
 
                         this.setRace(race);
-
                         this.step = 2;
-
                         this.showVocationSelection();
 
                     }
                 )
-
             );
 
         });
-
     },
 
 
     showVocationSelection(){
 
-        document.body.innerHTML =
-            this.pageTemplate(
-                "Crea il tuo personaggio",
-                `
-                    <p>
-                        Universo:
-                        <strong>
-                            ${this.data.universe}
-                        </strong>
-                    </p>
+        document.body.innerHTML = this.pageTemplate(
+            "Crea il tuo personaggio",
+            `
+                <p>
+                    Universo:
+                    <strong>${this.data.universe}</strong>
+                </p>
 
-                    <p>
-                        Razza:
-                        <strong>
-                            ${this.data.race}
-                        </strong>
-                    </p>
+                <p>
+                    Razza:
+                    <strong>${this.data.race}</strong>
+                </p>
 
-                    <h3>Scegli la vocazione</h3>
+                <h3>Scegli la vocazione</h3>
 
-                    <div id="character-vocations"></div>
-                `
-            );
+                <div id="character-vocations"></div>
+            `
+        );
 
         const container =
-            document.getElementById(
-                "character-vocations"
+            document.getElementById("character-vocations");
+
+        this.getVocations().forEach(vocation => {
+
+            container.appendChild(
+                this.createChoiceButton(
+                    vocation,
+                    () => {
+
+                        this.setVocation(vocation);
+                        this.step = 3;
+                        this.showBackgroundSelection();
+
+                    }
+                )
             );
 
-        this.getVocations()
-            .forEach(vocation => {
-
-                container.appendChild(
-
-                    this.createChoiceButton(
-                        vocation,
-                        () => {
-
-                            this.setVocation(
-                                vocation
-                            );
-
-                            this.step = 3;
-
-                            this.showBackgroundSelection();
-
-                        }
-                    )
-
-                );
-
-            });
-
+        });
     },
+        showBackgroundSelection(){
 
+        document.body.innerHTML = this.pageTemplate(
+            "Crea il tuo personaggio",
+            `
+                <p>
+                    Universo:
+                    <strong>${this.data.universe}</strong>
+                </p>
 
-    showBackgroundSelection(){
+                <p>
+                    Razza:
+                    <strong>${this.data.race}</strong>
+                </p>
 
-        document.body.innerHTML =
-            this.pageTemplate(
-                "Crea il tuo personaggio",
-                `
-                    <p>
-                        Universo:
-                        <strong>
-                            ${this.data.universe}
-                        </strong>
-                    </p>
+                <p>
+                    Vocazione:
+                    <strong>${this.data.vocation}</strong>
+                </p>
 
-                    <p>
-                        Razza:
-                        <strong>
-                            ${this.data.race}
-                        </strong>
-                    </p>
+                <h3>Scegli il background</h3>
 
-                    <p>
-                        Vocazione:
-                        <strong>
-                            ${this.data.vocation}
-                        </strong>
-                    </p>
-
-                    <h3>Scegli il background</h3>
-
-                    <div id="character-backgrounds"></div>
-                `
-            );
+                <div id="character-backgrounds"></div>
+            `
+        );
 
         const container =
-            document.getElementById(
-                "character-backgrounds"
+            document.getElementById("character-backgrounds");
+
+        this.getBackgrounds().forEach(background => {
+
+            container.appendChild(
+                this.createChoiceButton(
+                    background,
+                    () => {
+
+                        this.setBackground(background);
+                        this.step = 4;
+                        this.showAlignmentSelection();
+
+                    }
+                )
             );
 
-        this.getBackgrounds()
-            .forEach(background => {
-
-                container.appendChild(
-
-                    this.createChoiceButton(
-                        background,
-                        () => {
-
-                            this.setBackground(
-                                background
-                            );
-
-                            this.step = 4;
-
-                            this.showAlignmentSelection();
-
-                        }
-                    )
-
-                );
-
-            });
-
+        });
     },
 
 
@@ -906,96 +492,69 @@ const CharacterCreator = {
                 this.data.universe
             ].orientationLabel;
 
-        document.body.innerHTML =
-            this.pageTemplate(
-                "Crea il tuo personaggio",
-                `
-                    <p>
-                        Universo:
-                        <strong>
-                            ${this.data.universe}
-                        </strong>
-                    </p>
+        document.body.innerHTML = this.pageTemplate(
+            "Crea il tuo personaggio",
+            `
+                <p>
+                    Universo:
+                    <strong>${this.data.universe}</strong>
+                </p>
 
-                    <p>
-                        Razza:
-                        <strong>
-                            ${this.data.race}
-                        </strong>
-                    </p>
+                <p>
+                    Razza:
+                    <strong>${this.data.race}</strong>
+                </p>
 
-                    <p>
-                        Vocazione:
-                        <strong>
-                            ${this.data.vocation}
-                        </strong>
-                    </p>
+                <p>
+                    Vocazione:
+                    <strong>${this.data.vocation}</strong>
+                </p>
 
-                    <p>
-                        Background:
-                        <strong>
-                            ${this.data.background}
-                        </strong>
-                    </p>
+                <p>
+                    Background:
+                    <strong>${this.data.background}</strong>
+                </p>
 
-                    <h3>${label}</h3>
+                <h3>${label}</h3>
 
-                    <div id="character-alignments"></div>
-                `
-            );
+                <div id="character-alignments"></div>
+            `
+        );
 
         const container =
-            document.getElementById(
-                "character-alignments"
+            document.getElementById("character-alignments");
+
+        this.getAlignments().forEach(alignment => {
+
+            container.appendChild(
+                this.createChoiceButton(
+                    alignment,
+                    () => {
+
+                        this.setAlignment(alignment);
+                        this.step = 5;
+                        this.generateStats();
+                        this.showStats();
+
+                    }
+                )
             );
 
-        this.getAlignments()
-            .forEach(alignment => {
-
-                container.appendChild(
-
-                    this.createChoiceButton(
-                        alignment,
-                        () => {
-
-                            this.setAlignment(
-                                alignment
-                            );
-
-                            this.step = 5;
-
-                            this.generateStats();
-
-                            this.showStats();
-
-                        }
-                    )
-
-                );
-
-            });
-
+        });
     },
-
-
-    applyBonuses(source){
+        applyBonuses(source){
 
         if(!source){
             return;
         }
 
-        Object.entries(source)
-            .forEach(([stat, bonus]) => {
+        Object.entries(source).forEach(([stat, bonus]) => {
 
-                if(
-                    this.data.stats[stat]
-                    !== undefined
-                ){
-                    this.data.stats[stat] +=
-                        bonus;
-                }
+            if(this.data.stats[stat] !== undefined){
+                this.data.stats[stat] += bonus;
+            }
 
-            });
+        });
 
     },
 
@@ -1004,38 +563,28 @@ const CharacterCreator = {
 
         this.data.stats = {};
 
-        this.getStatNames()
-            .forEach(stat => {
-
-                this.data.stats[stat] = 10;
-
-            });
-
+        this.getStatNames().forEach(stat => {
+            this.data.stats[stat] = 10;
+        });
 
         const universe =
-            this.universes[
-                this.data.universe
-            ];
-
+            this.universes[this.data.universe];
 
         this.applyBonuses(
-            universe.raceBonuses[
-                this.data.race
-            ]
+            universe.raceBonuses
+                ? universe.raceBonuses[this.data.race]
+                : null
         );
-
 
         this.applyBonuses(
-            universe.vocationBonuses[
-                this.data.vocation
-            ]
+            universe.vocationBonuses
+                ? universe.vocationBonuses[this.data.vocation]
+                : null
         );
-
 
         this.statFloor = {
             ...this.data.stats
         };
-
 
         this.statPoints = 6;
 
@@ -1064,8 +613,8 @@ const CharacterCreator = {
     decreaseStat(stat){
 
         if(
-            this.data.stats[stat]
-            <= this.statFloor[stat]
+            this.data.stats[stat] <=
+            this.statFloor[stat]
         ){
             return;
         }
@@ -1082,9 +631,7 @@ const CharacterCreator = {
     showStats(){
 
         const statsHTML =
-            Object.entries(
-                this.data.stats
-            )
+            Object.entries(this.data.stats)
             .map(([name, value]) => `
 
                 <div style="
@@ -1101,9 +648,7 @@ const CharacterCreator = {
                         margin-bottom:12px;
                     ">
 
-                        <strong>
-                            ${name}
-                        </strong>
+                        <strong>${name}</strong>
 
                         <span style="
                             font-size:28px;
@@ -1113,7 +658,6 @@ const CharacterCreator = {
                         </span>
 
                     </div>
-
 
                     <div style="
                         display:flex;
@@ -1149,7 +693,6 @@ const CharacterCreator = {
             `)
             .join("");
 
-
         document.body.innerHTML =
             this.pageTemplate(
                 "Caratteristiche",
@@ -1172,7 +715,6 @@ const CharacterCreator = {
                         ${statsHTML}
                     </div>
 
-
                     <button
                         id="accept-stats"
                         style="
@@ -1187,11 +729,8 @@ const CharacterCreator = {
                 `
             );
 
-
         document
-            .querySelectorAll(
-                ".stat-plus"
-            )
+            .querySelectorAll(".stat-plus")
             .forEach(button => {
 
                 button.onclick = () => {
@@ -1204,11 +743,8 @@ const CharacterCreator = {
 
             });
 
-
         document
-            .querySelectorAll(
-                ".stat-minus"
-            )
+            .querySelectorAll(".stat-minus")
             .forEach(button => {
 
                 button.onclick = () => {
@@ -1221,11 +757,8 @@ const CharacterCreator = {
 
             });
 
-
         document
-            .getElementById(
-                "accept-stats"
-            )
+            .getElementById("accept-stats")
             .onclick = () => {
 
                 if(this.statPoints > 0){
@@ -1242,6 +775,216 @@ const CharacterCreator = {
 
                 this.step = 6;
 
+                this.showIdentity();
+
+            };
+
+    },
+     showIdentity(){
+
+        document.body.innerHTML =
+            this.pageTemplate(
+                "Chi sei?",
+                `
+
+                    <p>
+                        Ora diamo un'identità al tuo personaggio.
+                    </p>
+
+                    <label style="
+                        display:block;
+                        margin-top:20px;
+                        font-weight:bold;
+                    ">
+                        Nome *
+                    </label>
+
+                    <input
+                        id="character-name"
+                        type="text"
+                        placeholder="Nome del personaggio"
+                        style="
+                            width:100%;
+                            box-sizing:border-box;
+                            padding:14px;
+                            margin-top:8px;
+                            font-size:18px;
+                            border-radius:8px;
+                            border:1px solid #555;
+                        "
+                    >
+
+
+                    <label style="
+                        display:block;
+                        margin-top:20px;
+                        font-weight:bold;
+                    ">
+                        Età
+                    </label>
+
+                    <input
+                        id="character-age"
+                        type="number"
+                        min="1"
+                        placeholder="Età"
+                        style="
+                            width:100%;
+                            box-sizing:border-box;
+                            padding:14px;
+                            margin-top:8px;
+                            font-size:18px;
+                            border-radius:8px;
+                            border:1px solid #555;
+                        "
+                    >
+
+
+                    <label style="
+                        display:block;
+                        margin-top:20px;
+                        font-weight:bold;
+                    ">
+                        Genere / identità
+                    </label>
+
+                    <input
+                        id="character-identity"
+                        type="text"
+                        placeholder="Facoltativo"
+                        style="
+                            width:100%;
+                            box-sizing:border-box;
+                            padding:14px;
+                            margin-top:8px;
+                            font-size:18px;
+                            border-radius:8px;
+                            border:1px solid #555;
+                        "
+                    >
+
+
+                    <label style="
+                        display:block;
+                        margin-top:20px;
+                        font-weight:bold;
+                    ">
+                        Provenienza
+                    </label>
+
+                    <input
+                        id="character-origin"
+                        type="text"
+                        placeholder="Città, regione, pianeta, distretto..."
+                        style="
+                            width:100%;
+                            box-sizing:border-box;
+                            padding:14px;
+                            margin-top:8px;
+                            font-size:18px;
+                            border-radius:8px;
+                            border:1px solid #555;
+                        "
+                    >
+
+
+                    <label style="
+                        display:block;
+                        margin-top:20px;
+                        font-weight:bold;
+                    ">
+                        Tratto distintivo
+                    </label>
+
+                    <textarea
+                        id="character-trait"
+                        placeholder="Es. diffidente verso gli estranei, ironico, ossessionato dalla conoscenza..."
+                        rows="4"
+                        style="
+                            width:100%;
+                            box-sizing:border-box;
+                            padding:14px;
+                            margin-top:8px;
+                            font-size:18px;
+                            border-radius:8px;
+                            border:1px solid #555;
+                        "
+                    ></textarea>
+
+
+                    <button
+                        id="confirm-identity"
+                        style="
+                            width:100%;
+                            padding:16px;
+                            margin-top:24px;
+                            font-size:18px;
+                        ">
+                        Continua
+                    </button>
+
+                `
+            );
+
+
+        document
+            .getElementById("confirm-identity")
+            .onclick = () => {
+
+                const name =
+                    document
+                        .getElementById("character-name")
+                        .value
+                        .trim();
+
+                if(!name){
+
+                    alert(
+                        "Inserisci il nome del personaggio."
+                    );
+
+                    return;
+
+                }
+
+
+                const ageValue =
+                    document
+                        .getElementById("character-age")
+                        .value;
+
+
+                this.data.name = name;
+
+                this.data.age =
+                    ageValue
+                    ? Number(ageValue)
+                    : null;
+
+                this.data.identity =
+                    document
+                        .getElementById("character-identity")
+                        .value
+                        .trim()
+                    || null;
+
+                this.data.origin =
+                    document
+                        .getElementById("character-origin")
+                        .value
+                        .trim()
+                    || null;
+
+                this.data.trait =
+                    document
+                        .getElementById("character-trait")
+                        .value
+                        .trim()
+                    || null;
+
+
+                this.step = 7;
+
                 this.save();
 
                 this.showSummary();
@@ -1249,30 +992,45 @@ const CharacterCreator = {
             };
 
     },
-
-
-    showSummary(){
+        showSummary(){
 
         const statsHTML =
-            Object.entries(
-                this.data.stats
-            )
-            .map(
-                ([name, value]) =>
-                    `<p>
-                        ${name}:
-                        <strong>
-                            ${value}
-                        </strong>
-                    </p>`
-            )
+            Object.entries(this.data.stats)
+            .map(([name, value]) => `
+
+                <p>
+                    ${name}:
+                    <strong>${value}</strong>
+                </p>
+
+            `)
             .join("");
+
+
+        const optional = value => {
+
+            if(value !== null &&
+               value !== undefined &&
+               value !== ""){
+
+                return `<strong>${value}</strong>`;
+
+            }
+
+            return `<em>Non specificato</em>`;
+
+        };
 
 
         document.body.innerHTML =
             this.pageTemplate(
                 "Personaggio creato",
                 `
+
+                    <h3>
+                        ${this.data.name}
+                    </h3>
+
 
                     <p>
                         Universo:
@@ -1311,6 +1069,31 @@ const CharacterCreator = {
 
 
                     <h3>
+                        Identità
+                    </h3>
+
+                    <p>
+                        Età:
+                        ${optional(this.data.age)}
+                    </p>
+
+                    <p>
+                        Genere / identità:
+                        ${optional(this.data.identity)}
+                    </p>
+
+                    <p>
+                        Provenienza:
+                        ${optional(this.data.origin)}
+                    </p>
+
+                    <p>
+                        Tratto distintivo:
+                        ${optional(this.data.trait)}
+                    </p>
+
+
+                    <h3>
                         Caratteristiche
                     </h3>
 
@@ -1330,64 +1113,82 @@ const CharacterCreator = {
 
 
     setUniverse(id){
+
         this.data.universe = id;
+
     },
 
 
     getRaces(){
+
         return this.universes[
             this.data.universe
         ].races;
+
     },
 
 
     getVocations(){
+
         return this.universes[
             this.data.universe
         ].vocations;
+
     },
 
 
     getBackgrounds(){
+
         return this.universes[
             this.data.universe
         ].backgrounds;
+
     },
 
 
     getAlignments(){
+
         return this.universes[
             this.data.universe
         ].alignments;
+
     },
 
 
     getStatNames(){
+
         return this.universes[
             this.data.universe
         ].stats;
+
     },
 
 
     setRace(race){
+
         this.data.race = race;
+
     },
 
 
     setVocation(vocation){
+
         this.data.vocation = vocation;
+
     },
 
 
     setBackground(background){
-        this.data.background =
-            background;
+
+        this.data.background = background;
+
     },
 
 
     setAlignment(alignment){
-        this.data.alignment =
-            alignment;
+
+        this.data.alignment = alignment;
+
     },
 
 
@@ -1395,9 +1196,7 @@ const CharacterCreator = {
 
         localStorage.setItem(
             "chronicles-character",
-            JSON.stringify(
-                this.data
-            )
+            JSON.stringify(this.data)
         );
 
     }
@@ -1405,5 +1204,4 @@ const CharacterCreator = {
 };
 
 
-window.CharacterCreator =
-    CharacterCreator;
+window.CharacterCreator = CharacterCreator;
