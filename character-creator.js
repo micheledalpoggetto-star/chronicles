@@ -2,7 +2,7 @@
 ==========================================
 CHRONICLES
 Character Creator
-Version 1.2
+Version 1.3
 ==========================================
 */
 
@@ -23,6 +23,8 @@ const CharacterCreator = {
     universes: {
 
         fantasy: {
+
+            orientationLabel: "Scegli l'allineamento",
 
             races: [
                 "Umano",
@@ -67,11 +69,25 @@ const CharacterCreator = {
                 "Intrattenitore",
                 "Orfano",
                 "Guardia cittadina"
+            ],
+
+            alignments: [
+                "Legale Buono",
+                "Neutrale Buono",
+                "Caotico Buono",
+                "Legale Neutrale",
+                "Neutrale",
+                "Caotico Neutrale",
+                "Legale Malvagio",
+                "Neutrale Malvagio",
+                "Caotico Malvagio"
             ]
 
         },
 
         lovecraft: {
+
+            orientationLabel: "Scegli il tuo atteggiamento verso l'ignoto",
 
             races: [
                 "Umano"
@@ -100,11 +116,24 @@ const CharacterCreator = {
                 "Membro di una società segreta",
                 "Archivista",
                 "Abitante del luogo"
+            ],
+
+            alignments: [
+                "Scettico",
+                "Razionalista",
+                "Curioso",
+                "Ossessionato",
+                "Credente",
+                "Occultista",
+                "Timoroso",
+                "Fatalista"
             ]
 
         },
 
         superheroes: {
+
+            orientationLabel: "Scegli da che parte stare",
 
             races: [
                 "Umano",
@@ -135,11 +164,18 @@ const CharacterCreator = {
                 "Investigatore",
                 "Sopravvissuto a una catastrofe",
                 "Visitante da un altro mondo"
+            ],
+
+            alignments: [
+                "Eroe",
+                "Villain"
             ]
 
         },
 
         cyberpunk: {
+
+            orientationLabel: "Scegli la tua posizione nel sistema",
 
             races: [
                 "Umano",
@@ -169,11 +205,22 @@ const CharacterCreator = {
                 "Rivoluzionario",
                 "Cacciatore di taglie",
                 "Sopravvissuto delle periferie"
+            ],
+
+            alignments: [
+                "Corporativo",
+                "Indipendente",
+                "Mercenario",
+                "Ribelle",
+                "Anarchico",
+                "Idealista"
             ]
 
         },
 
         "fractured-domains": {
+
+            orientationLabel: "Scegli il tuo rapporto con i Domini",
 
             races: [
                 "Umano",
@@ -201,6 +248,15 @@ const CharacterCreator = {
                 "Nomade delle frontiere",
                 "Sopravvissuto a una Frattura",
                 "Adepto di un antico ordine"
+            ],
+
+            alignments: [
+                "Devoto al proprio Dominio",
+                "Custode dell'equilibrio",
+                "Cercatore di conoscenza",
+                "Ambizioso",
+                "Ribelle",
+                "Indipendente"
             ]
 
         }
@@ -318,15 +374,8 @@ const CharacterCreator = {
         document.body.innerHTML = this.pageTemplate(
             "Crea il tuo personaggio",
             `
-                <p>
-                    Universo:
-                    <strong>${universe}</strong>
-                </p>
-
-                <p>
-                    Razza:
-                    <strong>${race}</strong>
-                </p>
+                <p>Universo: <strong>${universe}</strong></p>
+                <p>Razza: <strong>${race}</strong></p>
 
                 <h3>Scegli la vocazione</h3>
 
@@ -368,20 +417,9 @@ const CharacterCreator = {
         document.body.innerHTML = this.pageTemplate(
             "Crea il tuo personaggio",
             `
-                <p>
-                    Universo:
-                    <strong>${universe}</strong>
-                </p>
-
-                <p>
-                    Razza:
-                    <strong>${race}</strong>
-                </p>
-
-                <p>
-                    Vocazione:
-                    <strong>${vocation}</strong>
-                </p>
+                <p>Universo: <strong>${universe}</strong></p>
+                <p>Razza: <strong>${race}</strong></p>
+                <p>Vocazione: <strong>${vocation}</strong></p>
 
                 <h3>Scegli il background</h3>
 
@@ -401,6 +439,55 @@ const CharacterCreator = {
                     this.setBackground(background);
 
                     this.step = 4;
+
+                    this.showAlignmentSelection();
+
+                }
+            );
+
+            container.appendChild(button);
+
+        });
+
+    },
+
+
+    showAlignmentSelection(){
+
+        const universe = this.data.universe;
+        const race = this.data.race;
+        const vocation = this.data.vocation;
+        const background = this.data.background;
+
+        const label =
+            this.universes[universe].orientationLabel;
+
+        document.body.innerHTML = this.pageTemplate(
+            "Crea il tuo personaggio",
+            `
+                <p>Universo: <strong>${universe}</strong></p>
+                <p>Razza: <strong>${race}</strong></p>
+                <p>Vocazione: <strong>${vocation}</strong></p>
+                <p>Background: <strong>${background}</strong></p>
+
+                <h3>${label}</h3>
+
+                <div id="character-alignments"></div>
+            `
+        );
+
+        const container =
+            document.getElementById("character-alignments");
+
+        this.getAlignments().forEach(alignment => {
+
+            const button = this.createChoiceButton(
+                alignment,
+                () => {
+
+                    this.setAlignment(alignment);
+
+                    this.step = 5;
 
                     this.save();
 
@@ -422,28 +509,22 @@ const CharacterCreator = {
         const race = this.data.race;
         const vocation = this.data.vocation;
         const background = this.data.background;
+        const alignment = this.data.alignment;
 
         document.body.innerHTML = this.pageTemplate(
             "Personaggio creato",
             `
-                <p>
-                    Universo:
-                    <strong>${universe}</strong>
-                </p>
+                <p>Universo: <strong>${universe}</strong></p>
+
+                <p>Razza: <strong>${race}</strong></p>
+
+                <p>Vocazione: <strong>${vocation}</strong></p>
+
+                <p>Background: <strong>${background}</strong></p>
 
                 <p>
-                    Razza:
-                    <strong>${race}</strong>
-                </p>
-
-                <p>
-                    Vocazione:
-                    <strong>${vocation}</strong>
-                </p>
-
-                <p>
-                    Background:
-                    <strong>${background}</strong>
+                    Orientamento:
+                    <strong>${alignment}</strong>
                 </p>
 
                 <p style="margin-top:30px;">
@@ -475,6 +556,11 @@ const CharacterCreator = {
     },
 
 
+    getAlignments(){
+        return this.universes[this.data.universe].alignments;
+    },
+
+
     setRace(race){
         this.data.race = race;
     },
@@ -487,6 +573,11 @@ const CharacterCreator = {
 
     setBackground(background){
         this.data.background = background;
+    },
+
+
+    setAlignment(alignment){
+        this.data.alignment = alignment;
     },
 
 
