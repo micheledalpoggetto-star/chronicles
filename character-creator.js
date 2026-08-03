@@ -161,6 +161,48 @@ const CharacterCreator = {
         }
 
     },
+    start(universe){
+
+    this.step = 1;
+    this.setUniverse(universe);
+
+    document.body.innerHTML = `
+        <main style="padding:24px;max-width:700px;margin:auto;">
+            <h1>Chronicles</h1>
+            <h2>Crea il tuo personaggio</h2>
+
+            <p>Universo: <strong>${universe}</strong></p>
+
+            <h3>Scegli la razza</h3>
+
+            <div id="character-races"></div>
+        </main>
+    `;
+
+    const container = document.getElementById("character-races");
+
+    this.getRaces().forEach(race => {
+
+        const button = document.createElement("button");
+
+        button.textContent = race;
+
+        button.style.display = "block";
+        button.style.width = "100%";
+        button.style.padding = "16px";
+        button.style.margin = "10px 0";
+        button.style.fontSize = "18px";
+
+        button.onclick = () => {
+            this.setRace(race);
+            alert("Razza selezionata: " + race);
+        };
+
+        container.appendChild(button);
+
+    });
+
+},
 
     setUniverse(id){
 
