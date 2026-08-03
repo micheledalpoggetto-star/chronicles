@@ -1224,3 +1224,14 @@ document.getElementById("start-adventure").onclick = () => {
 
 
 window.CharacterCreator = CharacterCreator;
+window.addEventListener("chronicles:universe-selected", function(event) {
+
+    const universe = event.detail;
+
+    if(!universe){
+        return;
+    }
+
+    CharacterCreator.start(universe);
+
+});
