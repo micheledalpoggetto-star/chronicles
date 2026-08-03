@@ -4,53 +4,113 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <title>Chronicles</title>
+
 <style>
-body{font-family:Arial;background:#111;color:#eee;margin:0;padding:24px}
-.card{border:1px solid #555;border-radius:10px;padding:12px;margin:10px 0;cursor:pointer}
-.card.selected{border-color:#4da3ff;background:#1b2b40}
-button{padding:12px 20px;margin-top:20px}
+body{
+  font-family:Arial;
+  background:#111;
+  color:#eee;
+  margin:0;
+  padding:24px;
+}
+
+.card{
+  border:1px solid #555;
+  border-radius:10px;
+  padding:12px;
+  margin:10px 0;
+  cursor:pointer;
+}
+
+.card.selected{
+  border-color:#4da3ff;
+  background:#1b2b40;
+}
+
+button{
+  padding:12px 20px;
+  margin-top:20px;
+}
 </style>
+
 </head>
+
 <body>
+
 <h1>Chronicles</h1>
 <h2>Scegli il tuo universo</h2>
+
 <div id="list"></div>
+
 <button id="continue" disabled>Continua</button>
+
 <script src="campaign.js"></script>
 <script src="universe-loader.js"></script>
 <script src="character-creator.js"></script>
+
 <script>
-const files=[
-'universe-fantasy.json',
-'universe-superheroes.json',
-'universe-lovecraft.json',
-'universe-cyberpunk.json',
-'universe-fractured-domains.json'
+
+const files = [
+  'universe-fantasy.json',
+  'universe-superheroes.json',
+  'universe-lovecraft.json',
+  'universe-cyberpunk.json',
+  'universe-fractured-domains.json'
 ];
-let selected=null;
-(async()=>{
- const list=document.getElementById('list');
- for(const f of files){
-   const u=await loadUniverse(f);
-   const d=document.createElement('div');
-   d.className='card';
-   d.innerHTML=`<b>${u.name}</b><br>${u.description}`;
-   d.onclick=()=>{
-      document.querySelectorAll('.card').forEach(c=>c.classList.remove('selected'));
+
+let selected = null;
+
+(async () => {
+
+  const list = document.getElementById('list');
+
+  for (const f of files) {
+
+    const u = await loadUniverse(f);
+
+    const d = document.createElement('div');
+
+    d.className = 'card';
+
+    d.innerHTML = `<b>${u.name}</b><br>${u.description}`;
+
+    d.onclick = () => {
+
+      document
+        .querySelectorAll('.card')
+        .forEach(c => c.classList.remove('selected'));
+
       d.classList.add('selected');
-      selected=u.id;
-      document.getElementById('continue').disabled=false;
-   };
-   list.appendChild(d);
- }
+
+      selected = u.id;
+
+      document.getElementById('continue').disabled = false;
+
+    };
+
+    list.appendChild(d);
+
+  }
+
 })();
-document.getElementById('continue').onclick=()=>{
- Campaign.universe=selected;
- localStorage.setItem('chronicles_campaign',JSON.stringify(Campaign));
-window.dispatchEvent(new CustomEvent("chronicles:universe-selected", {
-  detail: selected
-}));
+
+
+document.getElementById('continue').onclick = () => {
+
+  if (!selected) return;
+
+  Campaign.universe = selected;
+
+  localStorage.setItem(
+    'chronicles_campaign',
+    JSON.stringify(Campaign)
+  );
+
+  CharacterCreator.start(selected);
+
 };
+
 </script>
+
 </body>
 </html>
