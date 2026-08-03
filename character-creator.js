@@ -2,7 +2,7 @@
 ==========================================
 CHRONICLES
 Character Creator
-Version 1.3
+Version 1.4
 ==========================================
 */
 
@@ -81,9 +81,19 @@ const CharacterCreator = {
                 "Legale Malvagio",
                 "Neutrale Malvagio",
                 "Caotico Malvagio"
+            ],
+
+            stats: [
+                "Forza",
+                "Destrezza",
+                "Costituzione",
+                "Intelligenza",
+                "Saggezza",
+                "Carisma"
             ]
 
         },
+
 
         lovecraft: {
 
@@ -127,9 +137,19 @@ const CharacterCreator = {
                 "Occultista",
                 "Timoroso",
                 "Fatalista"
+            ],
+
+            stats: [
+                "Fisico",
+                "Destrezza",
+                "Intelletto",
+                "Istruzione",
+                "Volontà",
+                "Presenza"
             ]
 
         },
+
 
         superheroes: {
 
@@ -169,9 +189,19 @@ const CharacterCreator = {
             alignments: [
                 "Eroe",
                 "Villain"
+            ],
+
+            stats: [
+                "Potenza",
+                "Agilità",
+                "Resistenza",
+                "Intelletto",
+                "Volontà",
+                "Presenza"
             ]
 
         },
+
 
         cyberpunk: {
 
@@ -214,9 +244,19 @@ const CharacterCreator = {
                 "Ribelle",
                 "Anarchico",
                 "Idealista"
+            ],
+
+            stats: [
+                "Corpo",
+                "Riflessi",
+                "Tecnica",
+                "Intelligenza",
+                "Freddezza",
+                "Empatia"
             ]
 
         },
+
 
         "fractured-domains": {
 
@@ -257,6 +297,15 @@ const CharacterCreator = {
                 "Ambizioso",
                 "Ribelle",
                 "Indipendente"
+            ],
+
+            stats: [
+                "Vigore",
+                "Agilità",
+                "Mente",
+                "Volontà",
+                "Presenza",
+                "Affinità"
             ]
 
         }
@@ -281,6 +330,7 @@ const CharacterCreator = {
         this.setUniverse(universe);
 
         this.showRaceSelection();
+
     },
 
 
@@ -301,6 +351,7 @@ const CharacterCreator = {
 
             </main>
         `;
+
     },
 
 
@@ -320,6 +371,7 @@ const CharacterCreator = {
         button.onclick = callback;
 
         return button;
+
     },
 
 
@@ -330,10 +382,7 @@ const CharacterCreator = {
         document.body.innerHTML = this.pageTemplate(
             "Crea il tuo personaggio",
             `
-                <p>
-                    Universo:
-                    <strong>${universe}</strong>
-                </p>
+                <p>Universo: <strong>${universe}</strong></p>
 
                 <h3>Scegli la razza</h3>
 
@@ -346,20 +395,20 @@ const CharacterCreator = {
 
         this.getRaces().forEach(race => {
 
-            const button = this.createChoiceButton(
-                race,
-                () => {
+            container.appendChild(
+                this.createChoiceButton(
+                    race,
+                    () => {
 
-                    this.setRace(race);
+                        this.setRace(race);
 
-                    this.step = 2;
+                        this.step = 2;
 
-                    this.showVocationSelection();
+                        this.showVocationSelection();
 
-                }
+                    }
+                )
             );
-
-            container.appendChild(button);
 
         });
 
@@ -368,14 +417,11 @@ const CharacterCreator = {
 
     showVocationSelection(){
 
-        const universe = this.data.universe;
-        const race = this.data.race;
-
         document.body.innerHTML = this.pageTemplate(
             "Crea il tuo personaggio",
             `
-                <p>Universo: <strong>${universe}</strong></p>
-                <p>Razza: <strong>${race}</strong></p>
+                <p>Universo: <strong>${this.data.universe}</strong></p>
+                <p>Razza: <strong>${this.data.race}</strong></p>
 
                 <h3>Scegli la vocazione</h3>
 
@@ -388,20 +434,20 @@ const CharacterCreator = {
 
         this.getVocations().forEach(vocation => {
 
-            const button = this.createChoiceButton(
-                vocation,
-                () => {
+            container.appendChild(
+                this.createChoiceButton(
+                    vocation,
+                    () => {
 
-                    this.setVocation(vocation);
+                        this.setVocation(vocation);
 
-                    this.step = 3;
+                        this.step = 3;
 
-                    this.showBackgroundSelection();
+                        this.showBackgroundSelection();
 
-                }
+                    }
+                )
             );
-
-            container.appendChild(button);
 
         });
 
@@ -410,16 +456,12 @@ const CharacterCreator = {
 
     showBackgroundSelection(){
 
-        const universe = this.data.universe;
-        const race = this.data.race;
-        const vocation = this.data.vocation;
-
         document.body.innerHTML = this.pageTemplate(
             "Crea il tuo personaggio",
             `
-                <p>Universo: <strong>${universe}</strong></p>
-                <p>Razza: <strong>${race}</strong></p>
-                <p>Vocazione: <strong>${vocation}</strong></p>
+                <p>Universo: <strong>${this.data.universe}</strong></p>
+                <p>Razza: <strong>${this.data.race}</strong></p>
+                <p>Vocazione: <strong>${this.data.vocation}</strong></p>
 
                 <h3>Scegli il background</h3>
 
@@ -432,20 +474,20 @@ const CharacterCreator = {
 
         this.getBackgrounds().forEach(background => {
 
-            const button = this.createChoiceButton(
-                background,
-                () => {
+            container.appendChild(
+                this.createChoiceButton(
+                    background,
+                    () => {
 
-                    this.setBackground(background);
+                        this.setBackground(background);
 
-                    this.step = 4;
+                        this.step = 4;
 
-                    this.showAlignmentSelection();
+                        this.showAlignmentSelection();
 
-                }
+                    }
+                )
             );
-
-            container.appendChild(button);
 
         });
 
@@ -454,21 +496,16 @@ const CharacterCreator = {
 
     showAlignmentSelection(){
 
-        const universe = this.data.universe;
-        const race = this.data.race;
-        const vocation = this.data.vocation;
-        const background = this.data.background;
-
         const label =
-            this.universes[universe].orientationLabel;
+            this.universes[this.data.universe].orientationLabel;
 
         document.body.innerHTML = this.pageTemplate(
             "Crea il tuo personaggio",
             `
-                <p>Universo: <strong>${universe}</strong></p>
-                <p>Razza: <strong>${race}</strong></p>
-                <p>Vocazione: <strong>${vocation}</strong></p>
-                <p>Background: <strong>${background}</strong></p>
+                <p>Universo: <strong>${this.data.universe}</strong></p>
+                <p>Razza: <strong>${this.data.race}</strong></p>
+                <p>Vocazione: <strong>${this.data.vocation}</strong></p>
+                <p>Background: <strong>${this.data.background}</strong></p>
 
                 <h3>${label}</h3>
 
@@ -481,51 +518,191 @@ const CharacterCreator = {
 
         this.getAlignments().forEach(alignment => {
 
-            const button = this.createChoiceButton(
-                alignment,
-                () => {
+            container.appendChild(
+                this.createChoiceButton(
+                    alignment,
+                    () => {
 
-                    this.setAlignment(alignment);
+                        this.setAlignment(alignment);
 
-                    this.step = 5;
+                        this.step = 5;
 
-                    this.save();
+                        this.generateStats();
 
-                    this.showSummary();
+                        this.showStats();
 
-                }
+                    }
+                )
             );
-
-            container.appendChild(button);
 
         });
 
     },
 
 
+    rollStat(){
+
+        const rolls = [];
+
+        for(let i = 0; i < 4; i++){
+
+            rolls.push(
+                Math.floor(Math.random() * 6) + 1
+            );
+
+        }
+
+        rolls.sort((a,b) => a-b);
+
+        rolls.shift();
+
+        return rolls.reduce(
+            (total, value) => total + value,
+            0
+        );
+
+    },
+
+
+    generateStats(){
+
+        this.data.stats = {};
+
+        this.getStatNames().forEach(stat => {
+
+            this.data.stats[stat] =
+                this.rollStat();
+
+        });
+
+    },
+
+
+    showStats(){
+
+        const statsHTML =
+            Object.entries(this.data.stats)
+            .map(([name, value]) => `
+                <div style="
+                    display:flex;
+                    justify-content:space-between;
+                    align-items:center;
+                    border:1px solid #555;
+                    border-radius:10px;
+                    padding:16px;
+                    margin:10px 0;
+                ">
+                    <strong>${name}</strong>
+                    <span style="
+                        font-size:24px;
+                        font-weight:bold;
+                    ">
+                        ${value}
+                    </span>
+                </div>
+            `)
+            .join("");
+
+        document.body.innerHTML = this.pageTemplate(
+            "Caratteristiche",
+            `
+                <p>
+                    Queste sono le caratteristiche iniziali
+                    del tuo personaggio.
+                </p>
+
+                <div>
+                    ${statsHTML}
+                </div>
+
+                <button id="reroll-stats"
+                    style="
+                        width:100%;
+                        padding:16px;
+                        margin-top:20px;
+                        font-size:18px;
+                    ">
+                    Rigenera
+                </button>
+
+                <button id="accept-stats"
+                    style="
+                        width:100%;
+                        padding:16px;
+                        margin-top:10px;
+                        font-size:18px;
+                    ">
+                    Accetta
+                </button>
+            `
+        );
+
+        document
+            .getElementById("reroll-stats")
+            .onclick = () => {
+
+                this.generateStats();
+
+                this.showStats();
+
+            };
+
+
+        document
+            .getElementById("accept-stats")
+            .onclick = () => {
+
+                this.step = 6;
+
+                this.save();
+
+                this.showSummary();
+
+            };
+
+    },
+
+
     showSummary(){
 
-        const universe = this.data.universe;
-        const race = this.data.race;
-        const vocation = this.data.vocation;
-        const background = this.data.background;
-        const alignment = this.data.alignment;
+        const statsHTML =
+            Object.entries(this.data.stats)
+            .map(([name, value]) =>
+                `<p>${name}: <strong>${value}</strong></p>`
+            )
+            .join("");
 
         document.body.innerHTML = this.pageTemplate(
             "Personaggio creato",
             `
-                <p>Universo: <strong>${universe}</strong></p>
+                <p>
+                    Universo:
+                    <strong>${this.data.universe}</strong>
+                </p>
 
-                <p>Razza: <strong>${race}</strong></p>
+                <p>
+                    Razza:
+                    <strong>${this.data.race}</strong>
+                </p>
 
-                <p>Vocazione: <strong>${vocation}</strong></p>
+                <p>
+                    Vocazione:
+                    <strong>${this.data.vocation}</strong>
+                </p>
 
-                <p>Background: <strong>${background}</strong></p>
+                <p>
+                    Background:
+                    <strong>${this.data.background}</strong>
+                </p>
 
                 <p>
                     Orientamento:
-                    <strong>${alignment}</strong>
+                    <strong>${this.data.alignment}</strong>
                 </p>
+
+                <h3>Caratteristiche</h3>
+
+                ${statsHTML}
 
                 <p style="margin-top:30px;">
                     Il personaggio è stato salvato.
@@ -558,6 +735,11 @@ const CharacterCreator = {
 
     getAlignments(){
         return this.universes[this.data.universe].alignments;
+    },
+
+
+    getStatNames(){
+        return this.universes[this.data.universe].stats;
     },
 
 
