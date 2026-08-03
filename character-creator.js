@@ -207,3 +207,13 @@ const CharacterCreator = {
 };
 
 window.CharacterCreator=CharacterCreator;
+// Avvia il Character Creator dopo la scelta dell'universo
+window.addEventListener("chronicles:universe-selected", function (event) {
+    const universe = event.detail;
+    
+    if (!universe) return;
+
+    if (window.CharacterCreator && typeof window.CharacterCreator.start === "function") {
+        window.CharacterCreator.start(universe);
+    }
+});
