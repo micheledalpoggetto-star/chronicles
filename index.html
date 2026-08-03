@@ -47,7 +47,9 @@ let selected=null;
 document.getElementById('continue').onclick=()=>{
  Campaign.universe=selected;
  localStorage.setItem('chronicles_campaign',JSON.stringify(Campaign));
- alert('Universo selezionato: '+selected);
+window.dispatchEvent(new CustomEvent("chronicles:universe-selected", {
+  detail: selected
+}));
 };
 </script>
 </body>
