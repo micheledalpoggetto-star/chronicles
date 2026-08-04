@@ -1,119 +1,207 @@
 <!DOCTYPE html>
 <html lang="it">
+
 <head>
+
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width,initial-scale=1">
+
+<meta
+    name="viewport"
+    content="width=device-width, initial-scale=1"
+>
+
 <title>Chronicles</title>
 
 <style>
+
 body{
-  font-family:Arial;
-  background:#111;
-  color:#eee;
-  margin:0;
-  padding:24px;
+    font-family: Arial;
+    background:#111;
+    color:#eee;
+    margin:0;
+    padding:24px;
 }
 
 .card{
-  border:1px solid #555;
-  border-radius:10px;
-  padding:12px;
-  margin:10px 0;
-  cursor:pointer;
+    border:1px solid #555;
+    border-radius:10px;
+    padding:12px;
+    margin:10px 0;
+    cursor:pointer;
 }
 
 .card.selected{
-  border-color:#4da3ff;
-  background:#1b2b40;
+    border-color:#4da3ff;
+    background:#1b2b40;
 }
 
 button{
-  padding:12px 20px;
-  margin-top:20px;
+    padding:12px 20px;
+    margin-top:20px;
 }
+
 </style>
 
 </head>
 
+
 <body>
 
 <h1>Chronicles</h1>
+
 <h2>Scegli il tuo universo</h2>
 
 <div id="list"></div>
 
-<button id="continue" disabled>Continua</button>
+<button
+    id="continue"
+    disabled
+>
+    Continua
+</button>
 
-<script src="campaign.js"></script>
-<script src="universe-loader.js"></script>
+
+<!--
+==========================================
+CHRONICLES MODULES
+==========================================
+-->
+
+<script src="campaign.js?v=31"></script>
+
+<script src="universe-loader.js?v=31"></script>
+
 <script src="character-creator.js?v=17"></script>
-<script src="game-start.js?v=3"></script>
+
+<!--
+GameStart deve essere caricato UNA SOLA VOLTA.
+-->
+
+<script src="game-start.js?v=31"></script>
+
 
 <script>
 
 const files = [
-  'universe-fantasy.json',
-  'universe-superheroes.json',
-  'universe-lovecraft.json',
-  'universe-cyberpunk.json',
-  'universe-fractured-domains.json'
+
+    "universe-fantasy.json",
+
+    "universe-superheroes.json",
+
+    "universe-lovecraft.json",
+
+    "universe-cyberpunk.json",
+
+    "universe-fractured-domains.json"
+
 ];
+
 
 let selected = null;
 
+
 (async () => {
 
-  const list = document.getElementById('list');
+    const list =
+        document.getElementById(
+            "list"
+        );
 
-  for (const f of files) {
 
-    const u = await loadUniverse(f);
+    for(const f of files){
 
-    const d = document.createElement('div');
+        const u =
+            await loadUniverse(f);
 
-    d.className = 'card';
 
-    d.innerHTML = `<b>${u.name}</b><br>${u.description}`;
+        const d =
+            document.createElement(
+                "div"
+            );
 
-    d.onclick = () => {
 
-      document
-        .querySelectorAll('.card')
-        .forEach(c => c.classList.remove('selected'));
+        d.className =
+            "card";
 
-      d.classList.add('selected');
 
-      selected = u.id;
+        d.innerHTML =
+            `<b>${u.name}</b><br>${u.description}`;
 
-      document.getElementById('continue').disabled = false;
 
-    };
+        d.onclick = () => {
 
-    list.appendChild(d);
+            document
+                .querySelectorAll(
+                    ".card"
+                )
+                .forEach(
+                    c =>
+                        c.classList.remove(
+                            "selected"
+                        )
+                );
 
-  }
+
+            d.classList.add(
+                "selected"
+            );
+
+
+            selected =
+                u.id;
+
+
+            document
+                .getElementById(
+                    "continue"
+                )
+                .disabled =
+                    false;
+
+        };
+
+
+        list.appendChild(
+            d
+        );
+
+    }
 
 })();
 
 
-document.getElementById('continue').onclick = () => {
+document
+    .getElementById(
+        "continue"
+    )
+    .onclick = () => {
 
-  if (!selected) return;
+        if(!selected){
+            return;
+        }
 
-  Campaign.universe = selected;
 
-  localStorage.setItem(
-    'chronicles_campaign',
-    JSON.stringify(Campaign)
-  );
+        Campaign.universe =
+            selected;
 
-  CharacterCreator.start(selected);
 
-};
+        localStorage.setItem(
+            "chronicles_campaign",
+            JSON.stringify(
+                Campaign
+            )
+        );
+
+
+        CharacterCreator.start(
+            selected
+        );
+
+    };
 
 </script>
 
-<script src="game-start.js?v=31"></script>
 
 </body>
+
 </html>
