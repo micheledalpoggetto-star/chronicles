@@ -354,14 +354,29 @@ const GameStart = {
                 await response.json();
 
 
-            if(!response.ok){
+if(!response.ok){
 
-                throw new Error(
-                    result.error
-                    || "Errore del Game Master IA."
-                );
+    let errorMessage =
+        result.error
+        || "Errore del Game Master IA.";
 
-            }
+    if(result.details){
+
+        errorMessage +=
+            "\n\nDETTAGLI:\n" +
+            JSON.stringify(
+                result.details,
+                null,
+                2
+            );
+
+    }
+
+    throw new Error(
+        errorMessage
+    );
+
+}
 
 
             if(!result.narration){
