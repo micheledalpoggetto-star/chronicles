@@ -1121,9 +1121,32 @@ document.getElementById("start-adventure").onclick = () => {
 
     this.save();
 
-    GameStart.start();
+    try {
 
-    };
+        if (!window.GameStart) {
+            throw new Error(
+                "GameStart non è stato caricato."
+            );
+        }
+
+        if (typeof window.GameStart.start !== "function") {
+            throw new Error(
+                "GameStart esiste, ma start() non è disponibile."
+            );
+        }
+
+        window.GameStart.start();
+
+    } catch (error) {
+
+        alert(
+            "ERRORE AVVIO CHRONICLES:\n\n" +
+            (error.stack || error.message || error)
+        );
+
+    }
+
+};
             
     },
 
